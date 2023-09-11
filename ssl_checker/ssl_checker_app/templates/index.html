@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSL Checker</title>
+</head>
+<body>
+    <h1>SSL Checker</h1>
+    
+    <form id="ssl-form">
+        <label for="domain">Enter a domain to check SSL:</label>
+        <input type="text" id="domain" name="domain" required>
+        <button type="submit">Check SSL</button>
+    </form>
+    
+    <div id="ssl-result"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#ssl-form").submit(function(e) {
+                e.preventDefault();
+                var domain = $("#domain").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/check_ssl/",
+                    data: {
+                        'domain': domain,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            var issuer = response.issuer;
+                            var valid_until = response.valid_until;
+                            var days_left = response.days_left;
+
+                            var message = "SSL information:<br>Domain: " + response.domain + "<br>Issuer: " + issuer + "<br>Valid until: " + valid_until + "<br>Days left: " + days_left;
+                            $("#ssl-result").html(message);
+                        } else {
+                            $("#ssl-result").html("Error: " + response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        $("#ssl-result").html("Error: " + error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

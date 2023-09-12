@@ -6,7 +6,8 @@ import socket
 import datetime
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
-
+from django.contrib.auth.decorators import login_required
+@login_required
 def index(request):
     return render(request, 'index.html')
 
@@ -20,13 +21,11 @@ def check_ssl(request):
                     cert = ssock.getpeercert(binary_form=True)
 
             x509_cert = x509.load_der_x509_certificate(cert, default_backend())
-            issuer = x509_cert.issuer.rfc4514_string()
             cert_end_date = x509_cert.not_valid_after
             days_left = (cert_end_date - datetime.datetime.now()).days
 
             ssl_cert = SSLCertificate.objects.create(
                 domain=domain,
-                issuer=issuer,
                 valid_until=cert_end_date,
             )
             ssl_cert.save()
@@ -34,7 +33,6 @@ def check_ssl(request):
             response_data = {
                 'success': True,
                 'domain': domain,
-                'issuer': issuer,
                 'valid_until': cert_end_date.strftime('%Y-%m-%d'),
                 'days_left': days_left
             }

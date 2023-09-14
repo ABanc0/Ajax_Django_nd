@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{%load static%}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<style>
+  body{
+    background-image:url('{% static "zdj.jpg" %}');
+    background-size:cover;
+  }
+  .container{    
+    font-family:Monospace;
+    margin:130px auto 20px;
+    max-width:500px;
+    height:550px;
+    background:transparent;
+    border: 2px solid rgba(61, 7, 255, 0.2);
+    border-radius:10px;
+    backdrop-filter:blur(10px);
+    color:white;
+    
+  }
+  .loginform{      
+      font-family:Monospace;
+      padding:20px;
+      background:transparent;
+      
+  }
+  input[type="text"] , input[type="password"]{
+    width: 95%;
+    padding: 10px;
+    margin: 10px 0;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.410);
+    backdrop-filter: blur(20px);
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    font-family: "Osiris", sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+  button {
+    color:white;
+    background-color: transparent;
+    border: solid white 1px;
+    border-radius: 5px;
+    padding: 6px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    
+  }
+</style>
+<div class='container'>
+  <div class="loginform">
+    <h1>Log In</h1>
+    <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Log In</button>
+  </form>
+  </div class="loginform">
+</div>
+{% endblock %}

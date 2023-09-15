@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+ 
+  <div class="video-container">
+    <h1>Odtwarzacz wideo</h1>
+    <video width="640" height="360" controls>
+      <source src="{{ video_path }}" type="video/mp4">
+      Twoja przeglądarka nie obsługuje odtwarzacza wideo.
+    </video>
+  </div>
+  <style>
+    .video-container {
+      max-width: 640px; 
+      text-align: left; 
+      padding-left: 20px; 
+      display: flex; 
+      flex-direction: column;
+    }
+
+    #video-player {
+      width: 100%; 
+    }
+  </style>
+
+
+
+
+{% endblock %}
+
+
+{% extends 'base.html' %}
+{% block content %}
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+#menu-bar {
+  display: flex;
+    background: transparent;
+    border: 2px solid rgba(0, 0, 0, 0.656);
+    backdrop-filter: blur(20px); /* Poprawiłem tu literówkę */
+    border-radius: 4px;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+#menu-bar a {
+    color: #000;
+    margin-right: 20px;
+    text-decoration: none;
+}
+.io {
+    color: #000;
+    margin-right: auto;
+}
+#Menu,a {
+    background: transparent;
+    margin-right: 5px;
+    border-right: 2px solid rgba(0, 0, 0, 0.656);
+    backdrop-filter: blur(20px);
+    padding-right: 15px;
+    color: #fff;
+}
+
+
+h1 {
+    margin-top: 70px; 
+}
+</style>
+
+<div id="menu-bar">
+  <b class="io">SSL Checker</b>
+ <div id="Menu">MEnu</div>
+ <a href="{% url 'home' %}">home</a>
+  <a href="{% url 'ssl_data' %}">history</a>
+  <a href="{% url 'films' %}">videos</a>
+  <a href="{% url 'logout' %}">Log out</a>
+</div>
+
+  <h1>Lista filmów</h1>
+  <form method="get" action="{% url 'films' %}">
+    {% csrf_token %}
+    <input type="text" name="search_query" placeholder="Wyszukaj film" value="{{ search_query }}">
+    <button type="submit">Szukaj</button>
+    <button type="submit" name="clear_search" value="1">Wróć</button>
+</form>
+  <div class="video-list">
+    {% for video in videos %}
+      <div class="video-item">
+        <h2>{{ video.title }}</h2>
+        <video width="320" height="240" controls>
+          <source src="{{ video.file }}" type="video/mp4">
+          Twoja przeglądarka nie obsługuje odtwarzacza wideo.
+        </video>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

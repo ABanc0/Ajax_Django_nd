@@ -1,0 +1,163 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSL Checker</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <style>
+        h1{
+            color:white;
+        }
+        body{
+            background-image:url('{% static "zdj.jpg" %}');
+            background-size:cover;
+        }
+        .ssl-container{
+           
+            font-family:Monospace;
+            margin:130px auto 20px;
+            max-width:500px;
+            height:550px;
+            background:transparent;
+            border: 2px solid rgba(61, 7, 255, 0.2);
+            border-radius:10px;
+            backdrop-filter:blur(10px);
+        }
+        .ssl-header{
+            
+            font-family:Monospace;
+            padding:20px;
+            background:transparent;
+          
+            
+        }
+        #ssl-form{
+            padding:30px;
+        }
+        label{
+            color:white;
+            font-size:15px;
+            
+        }
+        #ssl-result{
+            color:white;
+            font-family:Monospace;
+            font-size:15px;
+            padding-left:40px;
+            text-shadow: 0px 0px 3px white;
+            width:100%;
+            height:10vh;
+            display:flex;
+            align-items:center;
+            justify-content: left;
+            
+        }
+        .button {
+            color:white;
+            background-color: transparent;
+            border: solid white 1px;
+            border-radius: 5px;
+            padding: 6px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            
+          }
+          #domain{
+            color:white;
+            height:27px;
+            font-size:16px;
+            border:1px solid white;
+            border-radius: 5px;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0, 0.4);
+          }
+          .w{
+            color:white;
+            background-color: rgba(255,0,0, 0.7);
+            border: none;
+            border-radius: 5px;
+            padding: 6px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            position: absolute;
+            right: 10px; 
+            bottom: 10px;  
+          }
+          .home{
+            text-align: center;
+            background-color:transparent;
+            text-decoration:none;
+            font-family:Monospace;
+            font-size:18px;
+          }
+          a.a:visited{
+            color:white;
+            text-decoration: none;
+          }
+          a.a:link{
+            color:white;
+          }
+
+    </style>
+</head>
+<body>
+    <div class='home'><a class='a' href="{%url 'home' %}">HOME</a></div>
+    <div class="ssl-container">
+        <div class="ssl-header">
+            <h1>SSL Checker</h1>
+        </div>
+        <form id="ssl-form">
+            <label for="domain"><pre>Enter a domain to check SSL  :</pre></label><br>
+            <input type="text" id="domain" name="domain" required>
+            <button type="submit" class="button">Check SSL</button>
+    </form>
+    <div id="ssl-result"></div>
+    <form method="POST" action="{%url 'logout' %}">
+        {%csrf_token%}
+    <button type="submit" class="w">Log out</button>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#ssl-form").submit(function(e) {
+                e.preventDefault();
+                var domain = $("#domain").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/check_ssl/",
+                    data: {
+                        'domain': domain,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            var valid_until = response.valid_until;
+                            var days_left = response.days_left;
+
+                            var message = "SSL information:<br>Domain: " + response.domain + "<br>Valid until: " + valid_until + "<br>Days left: " + days_left;
+                            $("#ssl-result").html(message);
+                        } else {
+                            $("#ssl-result").html("Error: " + response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        $("#ssl-result").html("Error: " + error);
+                    }
+                });
+            });
+        });
+        
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+.home{
+    text-align: right;
+    background-color:transparent;
+    text-decoration:none;
+    font-family:Monospace;
+    font-size:18px;
+    padding-right:10px;
+    padding-bottom:10px;
+    padding-top:10px;
+    border-bottom:solid white 2px;
+    width:100%;
+    position:fixed;
+    right:0;
+    left:0;
+    top:0;
+    height:flex;
+    backdrop-filter:blur(10px);
+    z-index:100;
+}
+a{
+    border-left:solid rgba(255,255,255, 0.7) 2px;
+    padding-left: 6px;
+    margin-right:15px;
+   
+  }
+
+  a.a:visited{
+    color:white;
+    text-decoration: none;
+  }
+  a.a:link{
+    color:white;
+    text-decoration: none;
+  }

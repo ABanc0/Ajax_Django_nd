@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+{%load static%}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+<style>
+body{
+   background-color:grey;
+   color:white;
+}
+h1{
+  margin-top:50px;
+}
+</style>
+  <h2>Profil użytkownika</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ profile_form.as_p }}
+    <button type="submit">Zapisz profil</button>
+    <a class='a' href="{%url 'user_profile' %}">Wróć</a>
+  </form>
+{% endblock %}

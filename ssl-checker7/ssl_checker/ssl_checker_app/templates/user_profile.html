@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{%load static%}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+<style>
+body{
+   background-color:grey;
+   color:white;
+}
+h1{
+  margin-top:50px;
+}
+</style>
+<div class='home'><a class='a' href="{%url 'home' %}">HOME</a>
+  <a class='a' href="{%url 'ssl_data' %}">History</a>
+  <a class='a' href="{%url 'films' %}">Filmy</a>
+  <a class='a' href="{%url 'user_profile' %}">Profil</a>
+  <a class='a' href="{%url 'logout' %}">Log out</a>
+</div>
+  <h1>Profil użytkownika</h1>
+  <p>Nazwa użytkownika: {{ user.username }}</p>
+  <p>Imie: {{user.first_name}}</p>
+  <p>Nazwisko: {{user.last_name}}</p>
+  <p>E-mail: {{ user.email }}</p>
+  <p>Opis: {{ user.userprofile.description }}</p>
+  {% if user.userprofile.profile_picture %}
+    <img src="{{ user.userprofile.profile_picture.url }}" alt="{{ user.username }}"><br>
+    <a class='a' href="{%url 'profile' %}">Edytuj profil</a>
+  {% else %}
+    <p>Brak zdjęcia profilowego.</p>
+    <a class='a' href="{%url 'profile' %}">Edytuj profil</a>
+  {% endif %}
+{% endblock %}

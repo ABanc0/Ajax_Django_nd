@@ -1,0 +1,62 @@
+
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SSL_DATA</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+<style>
+h1{
+    font-family:Monospace;
+    text-align:center;
+    padding-top:65px;
+}
+.tab{
+    font-family:Monospace;
+    font-size:16px;
+}
+body{
+    color:white;
+    background-image:url('{% static "zdj.jpg" %}');
+    background-size:cover;
+}
+.container{
+    padding-top:15px;
+    font-family:Monospace;
+    margin:40px auto 20px;
+    max-width:500px;
+    height:flex;
+    background:transparent;
+    border: 2px solid rgba(255,255,255, 0.7);
+    border-radius:10px;
+    backdrop-filter:blur(20px);
+    color:white;
+}
+hr.new1 {
+  border-top: 1px solid rgba(255,255,255, 0.85);
+}
+</style>
+</head>
+
+<body>
+<div class='home'><a class='a' href="{%url 'home' %}">HOME</a>
+    <a class='a' href="{%url 'ssl_data' %}">Historia</a>
+    <a class='a' href="{%url 'ssl2' %}">Historia2</a>
+     <a class='a' href="{%url 'films' %}">Filmy</a>
+     <a class='a' href="{%url 'user_profile' %}">Profil</a>
+    <a class='a' href="{%url 'logout' %}">Log out</a>
+</div>
+    <h1>SSL DATA</h1>
+<div class='container'>
+<ul class=tab>
+    {%for certificate in certificates%}
+    <li>ID: {{certificate.id}}</li>
+    <li>Domain: {{certificate.domain}}</li>
+    <li>Valid Until: {{certificate.valid_until}}</li>
+    <hr class='new1'>
+    {%endfor%}
+</ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+<style>
+    body {
+      background-color: 	rgba(0, 0, 0, 0.4);
+        color: white;
+        margin-left:20px;
+        margin-top:20px;
+    }
+    textarea{
+      background-color:white;
+    }
+    input[type="file"]::-webkit-file-upload-button {
+      color:white;
+      background-color: transparent;
+      border: solid white 1px;
+      border-radius: 5px;
+      padding: 2px 24px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top:5px;
+  }
+    h1 {
+        margin-top: 50px;
+    }
+    .button {
+      color:white;
+      background-color: transparent;
+      border: solid white 1px;
+      border-radius: 5px;
+      padding: 6px 24px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top:5px;
+      
+    }
+
+    .editable-field {
+        border: 1px solid #ccc;
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+
+    .editable-label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    div{
+      width:500px;
+
+    }
+</style>
+<h2>Profil użytkownika</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in profile_form %}
+        <div class="editable-field" contenteditable="true">
+            <div class="editable-label">{{ field.label_tag }}</div>
+            {{ field }}
+        </div>
+    {% endfor %}
+    <button class='button' type="submit">Zapisz profil</button>
+    <a class='a' href="{% url 'user_profile' %}">Wróć</a>
+</form>
+{% endblock %}

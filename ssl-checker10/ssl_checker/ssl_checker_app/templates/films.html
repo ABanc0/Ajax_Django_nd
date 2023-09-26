@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+<style>
+  body {
+    background-image: url('{% static "zdj.jpg" %}');
+    color: white;
+  }
+
+  h1 {
+    margin-top: 50px;
+    text-align:center;
+  }
+
+  .home a {
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;
+  }
+
+  .home {
+    margin-bottom: 20px;
+  }
+
+  .search-form {
+    margin-top: 20px;
+  }
+
+  .video-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .video-item {
+    margin: 20px;
+    text-align: center;
+    background-color: transparent; 
+    padding: 15px;
+    border-radius: 10px; 
+  }
+
+  
+  .btn-primary,
+  .btn-secondary {
+    color: white;
+  }
+
+  
+  .btn-primary {
+    background-color: transparent;
+    border-color: white;
+  }
+
+  
+  .btn-secondary {
+    background-color: transparent;
+    border-color: white;
+  }
+
+  
+  .form-control {
+    background-color: rgba(255,255,255, 0.2);
+    border-color: white;
+    color: white;
+  }
+  button.button:hover{
+    background-color:grey;
+    border-color:grey;
+  }
+  .form-control:focus{
+    background-color: rgba(255,255,255, 0.2);
+    border-color: white;
+    color: white;
+  }
+</style>
+
+<div class="home">
+  <a class="a" href="{% url 'home' %}">HOME</a>
+  <a class="a" href="{% url 'ssl_data' %}">Historia</a>
+  <a class='a' href="{%url 'ssl2' %}">Historia2</a>
+  <a class="a" href="{% url 'films' %}">Filmy</a>
+  <a class='a' href="{%url 'user_profile' %}">Profil</a>
+  <a class="a" href="{% url 'logout' %}">Log out</a>
+</div>
+
+<h1>Lista filmów:</h1>
+<form class="search-form" method="get" action="{% url 'films' %}">
+  {% csrf_token %}
+  <div class="input-group">
+    <input type="text" class="form-control" name="search_query" placeholder="Wpisz nazwe filmu" value="{{ search_query }}">
+    <div class="input-group-append">
+      <button class="btn btn-primary button" type="submit">Szukaj</button>
+      <button class="btn btn-secondary button" type="submit" name="clear_search" value="1">Wróć</button>
+    </div>
+  </div>
+</form>
+
+<div class="video-list">
+  {% for video in videos %}
+  <div class="video-item">
+    <h2>{{ video.title }}</h2>
+    <video width="320" height="240" controls>
+      <source src="{{ video.file }}" type="video/mp4">
+      Twoja przeglądarka nie obsługuje odtwarzacza wideo.
+    </video>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

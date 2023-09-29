@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <title>Upload Photo</title>
+    <style>
+        body{
+    color:white;
+    background-image:url('{% static "zdj.jpg" %}');
+    background-size:cover;
+}
+.text-center{
+    margin-bottom:40px;
+}
+/* Styl dla przycisku "Wstaw" */
+.custom-btn-wstaw {
+    margin-top: 100px; /* Dodaj margines 100px na górze */
+}
+.custom-container{
+    padding-top:15px;
+    font-family:Monospace;
+    margin:40px auto 20px;
+    max-width:500px;
+    height:flex;
+    background:transparent;
+    border: 2px solid rgba(255,255,255, 0.7);
+    border-radius:10px;
+    backdrop-filter:blur(20px);
+    color:white;
+    padding-bottom:50px;
+}
+</style>
+<body>
+    <div class="container mt-5 custom-container">
+        <h1 class="text-center">Wstaw zdjęcie:</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary btn-block custom-btn-wstaw">Wstaw</button>
+                    <a href="{% url 'lista_zdjec' %}" class="btn btn-secondary btn-block mt-3">Wróć</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

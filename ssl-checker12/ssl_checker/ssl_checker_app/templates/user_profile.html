@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+<style>
+    body{
+      background-image:url('{% static "zdj.jpg" %}');
+      background-size:cover;
+      color:white;
+    }
+    h1{
+      margin-top:30px;
+      text-align: center; 
+    }
+    .container-center {
+      background-color: rgba(0, 0, 0, 0.4);
+      color: white;
+      margin: 80px auto; 
+      padding: 20px;
+      max-width: 600px; 
+      border-radius: 10px;
+      padding-bottom:50px;
+  }
+
+    .home {
+        text-align: right;
+        background-color: transparent;
+        text-decoration: none;
+        font-family: Monospace;
+        font-size: 18px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        border-bottom: solid white 2px;
+        width: 100%;
+        position: fixed;
+        right: 0;
+        left: 0;
+        top: 0;
+        height: flex;
+        backdrop-filter: blur(10px);
+        z-index: 100;
+    }
+
+    a {
+        border-left: solid rgba(255, 255, 255, 0.7) 2px;
+        padding-left: 6px;
+        margin-right: 15px;
+    }
+
+    a.a:visited {
+        color: white;
+        text-decoration: none;
+    }
+
+    a.a:link {
+        color: white;
+        text-decoration: none;
+    }
+
+    button.button:hover {
+        background-color: transparent;
+    }
+</style>
+<div class='home'>
+    <a class='a' href="{% url 'home' %}">HOME</a>
+    <a class='a' href="{% url 'ssl_data' %}">Historia</a>
+    <a class='a' href="{%url 'ssl2' %}">Historia2</a>
+    <a class='a' href="{% url 'films' %}">Filmy</a>
+    <a class='a' href="{%url 'lista_zdjec' %}">zdjecia</a>
+    <a class='a' href="{% url 'user_profile' %}">Profil</a>
+    <a class='a' href="{% url 'logout' %}">Log out</a>
+</div>
+<div class="container-center">
+<h1>Profil użytkownika</h1>
+<p>Nazwa użytkownika: {{ user.username }}</p>
+<p>Imie: {{user.first_name}}</p>
+<p>Nazwisko: {{user.last_name}}</p>
+<p>E-mail: {{ user.email }}</p>
+<p>Opis: {{ user.userprofile.description }}</p>
+{% if user.userprofile.profile_picture %}
+    <img src="{{ user.userprofile.profile_picture.url }}" alt="{{ user.username }}"><br>
+    <a class='a' href="{% url 'profile' %}">Edytuj profil</a>
+{% else %}
+    <p>Brak zdjęcia profilowego.</p>
+    <a class='a' href="{% url 'profile' %}">Edytuj profil</a>
+{% endif %}
+</div>
+{% endblock %}
